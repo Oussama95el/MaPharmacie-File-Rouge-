@@ -1,0 +1,21 @@
+{
+  "name": "adm/backend",
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Oussama95el",
+      "email": "elbechario@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-pdo": "*"
+  }
+}
