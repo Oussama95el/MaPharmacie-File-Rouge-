@@ -51,7 +51,6 @@ export default {
           this.message = 'Api connection failed'
         }else {
           this.products = res.data
-          console.log(this.products)
         }
       })
     },

@@ -1,6 +1,6 @@
 <template>
-    <div>
-      <div class="max-w-[250px] max-h-fit bg-white shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <div >
+      <div class="max-w-[250px] h-full max-h-[28rem] flex flex-col justify-evenly items-center bg-white shadow-md dark:bg-gray-800 dark:border-gray-700">
 <!--           data-aos="fade-up"-->
 <!--           data-aos-offset="200"-->
 <!--           data-aos-delay="50"-->
@@ -10,11 +10,9 @@
 <!--           data-aos-once="false"-->
 <!--           data-aos-anchor-placement="top-center">-->
 
-        <router-link to="#" class="flex justify-center">
-          <div class="w-fit h-[50%] ">
-            <img class="object-contain w-50 h-[50%]" :src="'/assets/products/'+ item.image" alt="product image">
+          <div class="w-fit h-full cursor-pointer" @click="getCurrentProduct(item)">
+            <img class="h-14 w-14 object-contain bg-white rounded-full border" :src="'/assets/products/'+ item.image" alt="product image">
           </div>
-        </router-link>
         <div class="px-5 pb-5">
           <a href="#" class="text-center">
             <h5 class="text-base font-semibold tracking-tight text-gray-900">{{ item.marque }}</h5>
@@ -76,16 +74,31 @@
 </template>
 
 <script>
+import {computed} from "vue";
+
 export default {
   name: "ProductCard",
   props:{
     item:Object,
   },
-  data(){
-    return{
 
+  provide(){
+    return{
+      currentProd:computed(() => this.currentProduct)
     }
   },
+  data(){
+    return{
+      currentProduct:[],
+    }
+  },
+  methods:{
+    getCurrentProduct(product){
+      this.currentProduct = product
+      console.log(this.currentProduct);
+      // this.$router.push("/product")
+    }
+  }
 
 }
 

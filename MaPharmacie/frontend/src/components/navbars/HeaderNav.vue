@@ -132,13 +132,16 @@
                         </div>
                     </div>
                     <div class="flex">
-                        <button class="w-full md:block md:w-auto mx-4 text-left">
+                        <button class="w-full md:block md:w-auto mx-4 text-left ">
                             <router-link to="/login">
                                 <img class="w-6 ml-1 md:w-8" src="/assets/images/carbon_user-avatar.svg" alt="cart image" />
                                 <span>Login</span>
                             </router-link>
                         </button>
-                        <button class="w-full md:block md:w-auto mt-1 mx-4 text-left">
+                        <button class="w-full md:block md:w-auto mt-1 mx-4 text-left relative">
+                          <span v-if="display" class="bg-primary px-0.5 w-fit h-fit rounded text-white absolute -right-3 top-1">
+                            {{count}}
+                          </span>
                             <router-link to="/cart">
                                 <img class="w-6 md:w-8" src="/assets/images/Vector.svg" alt="cart image" />
                                 <span>Cart</span>
@@ -158,10 +161,19 @@ export default {
     data(){
       return{
         categories:[],
+        display:false,
+        count:0,
       }
     },
+  computed:{
+    cartCount(){
+      if (this.cartCount !== 0){
+        this.display = true
+      }
+    }
+  },
   mounted() {
-      const endpoint = "http://localhost/MaPharmacie/backend/public/categories"
+    const endpoint = "http://localhost/MaPharmacie/backend/public/categories"
     axios.get(endpoint).then(res =>{
       if (res.status !== 200){
         this.message = 'Api connection failed'

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Sidebar />
+    <Sidebar class="overflow-hidden"/>
     <div class="relative md:ml-64 bg-blueGray-100">
       <div class="hidden md:block w-100 md:flex md:items-center md:justify-between p-5">
         <div class="flex items-center text-center md:w-[30px]-[30px]">
-            <h2 class="ml-10 text-2xl font-semibold ">Dashboard</h2>
+            <h2 class="ml-10 text-2xl font-semibold ">Dashboar</h2>
         </div>
 
         <div class="search-input relative md:w-[380px] w-[250px] mt2">

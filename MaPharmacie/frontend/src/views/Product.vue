@@ -46,8 +46,9 @@
       <span class="bg-gray-700 ml-10 mr-10  w-11/12 h-[1px]"></span>
     </div>
     <section class="flex flex-wrap grid-cols-1 sm:grid-cols-2 gap-8 md:grid-cols-4 md:gap-8 p-5 justify-center">
-      <ProductCard v-for="item in limitCard" :key="item"/>
-      {{item}}
+<!--      <ProductCard v-for="item in limitCard" :key="item"/>-->
+<!--      {{item}}-->
+      {{currentProd}}
     </section>
   </div>
 </template>
@@ -56,14 +57,20 @@
 import ProductCard from "../components/cards/ProductCard.vue";
 export default {
   name: "Product",
+  inject:["currentProd"],
   components:{
     ProductCard,
   },
   data(){
     return{
       limitCard: 4,
+
     }
+  },
+  mounted() {
+    console.log(this.currentProd);
   }
+
 }
 </script>
 

@@ -10,5 +10,6 @@ const app = createApp(App)
 
 
 AOS.init();
+app.provide("currentProd", null)
 app.use(router);
 app.mount('#app')
