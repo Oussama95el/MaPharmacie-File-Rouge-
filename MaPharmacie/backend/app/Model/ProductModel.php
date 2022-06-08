@@ -13,12 +13,14 @@ class ProductModel extends CategoryModel
                                                     values (:ref, :name, :marque, :image, :description, :prix_achat, :prix_vente,:categorie, :date_ajout_produit)');
         return $db->execute($data);
     }
-    public static function getProducts(): bool|array
+    public static function getProducts(int $limit,int $page): bool|array
     {
         // TODO: Implement getProduct() method.
         // inner join product and categorie
         $connect = DatabaseModel::connect();
-        $db = $connect->prepare('SELECT product.*, categorie.nom FROM product INNER JOIN categorie ON product.categorie = categorie.id');
+        $db = $connect->prepare('SELECT product.*,categorie.nom FROM product INNER JOIN categorie ON product.categorie = categorie.id limit :limit offset :page');
+        $db->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $db->bindParam(':page', $page, PDO::PARAM_INT);
         $db->execute();
         return $db->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -58,19 +60,21 @@ class ProductModel extends CategoryModel
         return $db->fetchAll(PDO::FETCH_ASSOC);
     }
     // function that return last 5 products added order by date
-    public static function getLastProducts(): bool
-    {
-        $connect = DatabaseModel::connect();
-        $db = $connect->prepare('SELECT * FROM product ORDER BY date_ajout_produit DESC LIMIT 4');
-        $db->execute();
-        return $db->fetchAll(PDO::FETCH_ASSOC);
-    }
+//    public static function getLastProducts(): bool
+//    {
+//        $connect = DatabaseModel::connect();
+//        $db = $connect->prepare('SELECT * FROM product ORDER BY date_ajout_produit DESC LIMIT 4');
+//        $db->execute();
+//        return $db->fetchAll(PDO::FETCH_ASSOC);
+//    }
 
-     public static function getLastProductsByCategory($id): bool
+    public static function getLimitProductsByCategory(int $id)
      {
          $connect = DatabaseModel::connect();
-         $db = $connect->prepare('SELECT * FROM product WHERE categorie = :id  DESC LIMIT 4');
-         $db->execute($id);
+         $querry = 'SELECT * FROM product WHERE categorie = :id ORDER BY date_ajout_produit DESC LIMIT 4';
+         $db = $connect->prepare($querry);
+         $db->bindParam(':id', $id, PDO::PARAM_INT);
+         $db->execute();
          return $db->fetchAll(PDO::FETCH_ASSOC);
      }
 

@@ -55,7 +55,7 @@
                 </div>
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex justify-between">
                   <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Save
+                    Submit
                   </button>
                   <button @click="toggleForm(false)" type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Cancel
@@ -98,14 +98,12 @@ export default {
       action: "Add" ,
       current: this.currentProduct,
       categories:[],
+
     }
   },
-  // watch:{
-  //   current(newP,oldP){
-  //     this.defaultForm = newP ?? this.initialFormState
-  //
-  //   }
-  // },
+  created() {
+    console.log(this.updateProduct);
+  },
   mounted() {
     if(this.currentProduct.value){
       this.defaultForm = this.currentProduct
@@ -124,12 +122,12 @@ export default {
 
       axios.post(endpoint,this.defaultForm)
           .then(res =>{
-        if (res.status = 200){
-        swal({
-          title: "Good job!",
-          text: "You clicked the button!",
-          icon: "success",
-        })
+        if (res.status === 200){
+        // swal({
+        //   title: "Good job!",
+        //   text: "You clicked the button!",
+        //   icon: "success",
+        // })
           this.fetchProducts();
           this.toggleForm(false);
           if(isUpdate){
@@ -140,15 +138,9 @@ export default {
     },
     previewFiles(event) {
       this.defaultForm.image = event.target.files[0].name
-      console.log(event.target.files)
     },
   },
-  computed:{
-    // updateForm(){
-    //   console.log(this.currentProduct)
-    //   this.defaultForm = this.currentProduct.value ? this.currentProduct : initialFormState
-    // }
-  }
+
 }
 </script>
 

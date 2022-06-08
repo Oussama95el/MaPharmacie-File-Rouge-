@@ -26,8 +26,11 @@ Route::post('/livreur/login',[LivreurController::class,"auth"]);
 Route::post('/category/add', [CategoryController::class,"addCategory"]);
 Route::post('/category/update',[CategoryController::class,"updateCategory"]);
 Route::get('/categories',[CategoryController::class,"geAllCategories"]);
+Route::delete('/category/delete/{id}',[CategoryController::class,"deleteCategory"]);
 //Product routes
 Route::post('/product/add',[ProductController::class,"addProduct"]);
 Route::get('/products',[ProductController::class,"getAllProducts"]);
+Route::get('/products/{id}',[ProductController::class,"getProductsByCategory"]);
+//Route::get('/products/{id}',[ProductController::class,"getAllProducts"]);
 Route::post('/product/update',[ProductController::class,"updateProduct"]);
 Route::delete('/product/delete/{id}',[ProductController::class,"deleteProduct"]);

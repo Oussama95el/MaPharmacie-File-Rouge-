@@ -37,4 +37,9 @@ class CategoryController
          return Route::json($data);
          }else echo 'No data';
     }
+
+    public static function deleteCategory()
+    {
+        return CategoryModel::deleteCategory(Request::get('id'));
+    }
 }

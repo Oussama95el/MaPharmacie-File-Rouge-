@@ -23,7 +23,7 @@
           to="/admin"
       >
         <div class="flex items-center text-center md:w-[30px]-[30px]">
-          <img src="../../assets/images/Logo.png" alt="" class="" />
+          <img src="/assets/images/Logo.png" alt="logo image"/>
           <span class="hidden sm:block text-primary ml-2 text-p">
                             MaPharmacie
                         </span>
@@ -74,7 +74,8 @@
                 placeholder="Search"
                 class="border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
             />
-            <img src="../../assets/images/SearchVector.png" class="absolute top-[15px] right-[20px] w-[20px] -[20px]"
+            <img src="/assets/images/SearchVector.png"
+                 class="absolute top-[15px] right-[20px] w-[20px] -[20px]"
                  alt="search icon" />
           </div>
         </form>
@@ -142,7 +143,7 @@
           <li class="items-center">
             <router-link
                 class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                to="/orders/valid"
+                to="#"
             >
               Valid Orders
             </router-link>
@@ -151,7 +152,7 @@
           <li class="items-center">
             <router-link
                 class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                to="/orders/unvalid"
+                to="#"
             >
               Unvalid Orders
             </router-link>

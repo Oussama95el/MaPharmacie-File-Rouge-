@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div class="max-w-[250px] bg-white shadow-md dark:bg-gray-800 dark:border-gray-700">
+      <div class="max-w-[250px] max-h-fit bg-white shadow-md dark:bg-gray-800 dark:border-gray-700">
 <!--           data-aos="fade-up"-->
 <!--           data-aos-offset="200"-->
 <!--           data-aos-delay="50"-->
@@ -9,21 +9,24 @@
 <!--           data-aos-mirror="true"-->
 <!--           data-aos-once="false"-->
 <!--           data-aos-anchor-placement="top-center">-->
-        <a href="#" class="flex justify-center">
-          <img class="p-6 rounded-t-lg" src="/assets/images/santis-lab-aromasanti.png" alt="product image">
-        </a>
+
+        <router-link to="#" class="flex justify-center">
+          <div class="w-fit h-[50%] ">
+            <img class="object-contain w-50 h-[50%]" :src="'/assets/products/'+ item.image" alt="product image">
+          </div>
+        </router-link>
         <div class="px-5 pb-5">
           <a href="#" class="text-center">
-            <h5 class="text-base font-semibold tracking-tight text-gray-900">Santis lab</h5>
+            <h5 class="text-base font-semibold tracking-tight text-gray-900">{{ item.marque }}</h5>
           </a>
           <p class="text-xs text-[706F6F] text-center">
-            Aromasantis ARG 30 Capsules
+            {{ item.name }}
           </p>
           <div class="mt-6">
             <!--          Description-->
             <h5 class="text-base font-semibold tracking-tight text-gray-900 dark:text-white">Description :</h5>
-            <p class="text-xs text-[706F6F] ">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit
+            <p class="text-xs text-[706F6F] maxLines">
+              {{ item.description }}
             </p>
           </div>
           <div class="flex items-center mt-2.5 mb-5">
@@ -56,7 +59,7 @@
                 class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
           </div>
           <div class="flex justify-between items-center">
-            <span class="text-base font-bold text-gray-900 dark:text-white">$599</span>
+            <span class="text-base font-bold text-gray-900 dark:text-white">{{item.prix_vente}}MAD</span>
             <button
                class="text-white
                       bg-primary
@@ -74,10 +77,30 @@
 
 <script>
 export default {
-  name: "ProductCard"
+  name: "ProductCard",
+  props:{
+    item:Object,
+  },
+  data(){
+    return{
+
+    }
+  },
+
 }
+
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+@mixin maxLines($max: 2) {
+  display: -webkit-box;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $max;
+  overflow: hidden;
+}
+.maxLines{
+  @include maxLines(3)
+}
 </style>

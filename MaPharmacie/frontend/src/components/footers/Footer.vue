@@ -12,7 +12,7 @@
                             <router-link to="/contact" class="hover:underline">Contact</router-link>
                         </li>
                         <li class="mb-4">
-                            <router-link to="/gallery" class="hover:underline">Medicine</router-link>
+                            <router-link to="/store" class="hover:underline">Medicine</router-link>
                         </li>
                         <li class="mb-4">
                             <router-link to="#" class="hover:underline">Para-Pharmacy</router-link>

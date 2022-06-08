@@ -32,6 +32,14 @@ abstract class CategoryModel
 
     }
 
+    public static function deleteCategory($id): bool
+    {
+        $connect = DatabaseModel::connect();
+        $db = $connect->prepare('DELETE FROM categorie WHERE id = :id');
+        return $db->execute(["id" => $id]);
+    }
+
+
     abstract public static function addProduct($data);
     abstract public static function getProductById($id);
     abstract public static function updateProduct($data);

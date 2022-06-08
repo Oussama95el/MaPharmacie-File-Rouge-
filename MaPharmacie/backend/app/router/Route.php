@@ -184,7 +184,6 @@ class Route
     public static function json($data)
     {
         echo json_encode($data);
-        header("content-type: application/json");
     }
 }
 

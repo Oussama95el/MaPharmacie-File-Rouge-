@@ -7,10 +7,12 @@ import Product from "../views/Product.vue";
 import Cart from "../views/Cart.vue";
 import About from "../views/About.vue";
 import Contact from "../views/Contact.vue";
+import Store from "../views/Store.vue";
 // import admin accessed routes
 import Dashboard from "../views/Admin/Dashboard.vue";
 import Admin from "../layouts/Admin.vue";
 import Products from "../views/Admin/Products.vue";
+import category from "../views/Admin/Category.vue";
 
 const routes = [
     //  define public user routes
@@ -42,7 +44,13 @@ const routes = [
             {
                 path: "/contact",
                 component: Contact
-            },],},
+            },
+            {
+                path: "/store",
+                component: Store
+            },
+        ],
+    },
     // define admin restricted routes
     {
         path: "/admin",
@@ -57,10 +65,10 @@ const routes = [
                 path: "/admin/products",
                 component: Products,
             },
-            // {
-            //   path: "/admin/tables",
-            //   component: Tables,
-            // },
+            {
+              path: "/admin/category",
+              component: category,
+            },
             // {
             //   path: "/admin/maps",
             //   component: Maps,

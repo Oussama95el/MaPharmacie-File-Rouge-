@@ -21,7 +21,7 @@ class ProductController
             'image' => $data['image'],
             'prix_achat' => $data['prix_achat'],
             'prix_vente' => $data['prix_vente'],
-            'categorie' => '2',
+            'categorie' => $data['categorie'],
             'date_ajout_produit' => date('Y-m-d H:i:s'),
         );
         return ProductModel::addProduct($newData);
@@ -29,7 +29,7 @@ class ProductController
     // function get all products and parse return to json
     public static function getAllProducts()
     {
-        $data = ProductModel::getProducts();
+        $data = ProductModel::getProducts(5,0);
         if ($data !== []){
             return Route::json($data);
         }else echo 'No data';
@@ -60,6 +60,13 @@ class ProductController
     public static function deleteProduct(): bool
     {
         return ProductModel::deleteProduct(Request::get("id"));
+    }
+    public static function getProductsByCategory()
+    {
+        $data = ProductModel::getLimitProductsByCategory(Request::get("id"));
+        if ($data !== []){
+            return Route::json($data);
+        }else echo 'No data';
     }
 
 }
