@@ -18,4 +18,33 @@ class LivreurModel
             return 'error ' . $ex->getMessage();
         }
     }
+
+    public static function getAllLivreur(): array
+    {
+        $connect = DatabaseModel::connect();
+        $db = $connect->prepare('SELECT * FROM livereur');
+        $db->execute();
+        return $db->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function addLivreur($data)
+    {
+        $connect = DatabaseModel::connect();
+        $db = $connect->prepare('INSERT INTO livereur ( fname, email, password) 
+                                                    values (:fname, :email, :password)');
+
+        return $db->execute($data);
+    }
+    public static function updateLivreur($data)
+    {
+        $connect = DatabaseModel::connect();
+        $db = $connect->prepare('UPDATE livereur SET fname = :fname, email = :email WHERE id = :id');
+        return $db->execute($data);
+    }
+    public static function deleteLivreur($id): bool
+    {
+        $connect = DatabaseModel::connect();
+        $db = $connect->prepare('DELETE FROM livereur WHERE id = :id');
+        return $db->execute(["id" => $id]);
+    }
 }

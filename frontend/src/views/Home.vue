@@ -9,7 +9,7 @@
           <img
             src="/assets/images/Group%204.png"
             class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-            alt="..."
+            alt="Publicity MaPharmacie"
           />
         </div>
 
@@ -20,7 +20,7 @@
           <img
             src="/assets/images/garantie.png"
             class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
-            alt="..."
+            alt="Publicity MaPharmacie"
           />
         </div>
       </div>

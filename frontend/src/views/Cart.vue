@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-screen bg-secondary my-10">
+    <div class="h-full bg-secondary my-10">
       <div class="">
         <div class="max-w-full mx-auto bg-secondary rounded-lg md:max-w-full">
           <div class="md:flex">
@@ -134,80 +134,110 @@
                   </div>
                 </div>
                 <!--                 card details for checkout-->
-                <div class="p-5 bg-gray-800 rounded overflow-visible">
+                <div
+                  class="p-5 bg-gray-800 rounded overflow-visible flex flex-col items-center justify-center"
+                >
                   <span class="text-xl font-medium text-gray-100 block pb-3"
-                    >Card Details</span
+                    >Payment Details</span
                   >
-
-                  <span class="text-xs text-gray-400">Card Type</span>
-
-                  <div
-                    class="overflow-visible flex justify-between items-center mt-2"
+                  <span class="text-xs text-gray-400"
+                    >Complete your informations to checkout</span
                   >
-                    <div class="flex justify-center items-center flex-col">
-                      <img
-                        src="https://img.icons8.com/color/96/000000/mastercard-logo.png"
-                        width="40"
-                        class="relative right-5"
-                      />
-                      <span
-                        class="text-xs font-medium text-gray-200 bottom-2 relative right-5"
-                        >mastercard.</span
-                      >
-                    </div>
-                  </div>
-
-                  <div class="flex justify-center flex-col pt-3">
-                    <label class="text-xs text-gray-400">Name on Card</label>
-                    <input
-                      type="text"
-                      class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
-                      placeholder="Giga Tamarashvili"
-                    />
-                  </div>
-
-                  <div class="flex justify-center flex-col pt-3">
-                    <label class="text-xs text-gray-400">Card Number</label>
-                    <input
-                      type="text"
-                      class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
-                      placeholder="****     ****      ****      ****"
-                    />
-                  </div>
-
-                  <div class="grid grid-cols-3 gap-2 pt-2 mb-3">
-                    <div class="col-span-2">
-                      <label class="text-xs text-gray-400"
-                        >Expiration Date</label
-                      >
-                      <div class="grid grid-cols-2 gap-2">
-                        <input
-                          type="text"
-                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
-                          placeholder="mm"
-                        />
-                        <input
-                          type="text"
-                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
-                          placeholder="yyyy"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="">
-                      <label class="text-xs text-gray-400">CVV</label>
+                  <form class="w-full">
+                    <div class="flex justify-center flex-col pt-3">
+                      <label class="text-xs text-gray-400">Adress 1</label>
                       <input
                         type="text"
                         class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
-                        placeholder="XXX"
+                        placeholder="15 Rue de la République, Example"
+                        required
                       />
                     </div>
-                  </div>
-                  <button
-                    class="h-12 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600"
-                  >
-                    Check Out
-                  </button>
+                    <div class="flex justify-center flex-col pt-3">
+                      <label class="text-xs text-gray-400">Adress 2</label>
+                      <input
+                        type="text"
+                        class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
+                        placeholder="35 Rue de la République, Example"
+                        required
+                      />
+                    </div>
+                    <div class="grid grid-cols-2 gap-6">
+                      <div class="flex justify-center flex-col pt-3">
+                        <label class="text-xs text-gray-400">Zip Code</label>
+                        <input
+                          type="text"
+                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
+                          placeholder="00000"
+                          required
+                        />
+                      </div>
+                      <div class="flex justify-center flex-col pt-3">
+                        <label class="text-xs text-gray-400">City</label>
+                        <input
+                          type="text"
+                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
+                          placeholder="City"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="flex justify-center flex-col pt-3">
+                      <input
+                        type="submit"
+                        class="cursor-pointer focus:outline-none w-full h-8 p-2 bg-primary flex justify-center items-center text-white text-center placeholder-gray-300 text-sm border-b border-blue-500"
+                        value="Confirm"
+                      />
+                    </div>
+                    <!--                  <div class="flex justify-center flex-col pt-3">-->
+                    <!--                    <label class="text-xs text-gray-400">Card Number</label>-->
+                    <!--                    <input-->
+                    <!--                      type="text"-->
+                    <!--                      class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"-->
+                    <!--                      placeholder="****     ****      ****      ****"-->
+                    <!--                    />-->
+                    <!--                  </div>-->
+
+                    <!--                  <div class="grid grid-cols-3 gap-2 pt-2 mb-3">-->
+                    <!--                    <div class="col-span-2">-->
+                    <!--                      <label class="text-xs text-gray-400"-->
+                    <!--                        >Expiration Date</label-->
+                    <!--                      >-->
+                    <!--                      <div class="grid grid-cols-2 gap-2">-->
+                    <!--                        <input-->
+                    <!--                          type="text"-->
+                    <!--                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"-->
+                    <!--                          placeholder="mm"-->
+                    <!--                        />-->
+                    <!--                        <input-->
+                    <!--                          type="text"-->
+                    <!--                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"-->
+                    <!--                          placeholder="yyyy"-->
+                    <!--                        />-->
+                    <!--                      </div>-->
+                    <!--                    </div>-->
+
+                    <!--                    <div class="">-->
+                    <!--                      <label class="text-xs text-gray-400">CVV</label>-->
+                    <!--                      <input-->
+                    <!--                        type="text"-->
+                    <!--                        class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"-->
+                    <!--                        placeholder="XXX"-->
+                    <!--                      />-->
+                    <!--                    </div>-->
+                    <!--                  </div>-->
+                    <!--                  <button-->
+                    <!--                    class="h-12 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600"-->
+                    <!--                  >-->
+                    <!--                    Check Out-->
+                    <!--                  </button>-->
+                    <div class="flex justify-center flex-col pt-3">
+                      <h3 class="text-white text-center">
+                        Choose payment method
+                      </h3>
+                      <Paypal class="flex items-center justify-center" />
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -219,8 +249,12 @@
 </template>
 
 <script>
+import Paypal from "../components/buttons/Paypal.vue";
 export default {
   name: "Cart",
+  components: {
+    Paypal,
+  },
   data() {
     return {
       message: "",
@@ -265,6 +299,9 @@ export default {
     },
     clearCart() {
       this.$store.commit("clearCart");
+    },
+    checkout() {
+      this.$store.commit("checkout");
     },
   },
 };

@@ -73,7 +73,7 @@ class ProductModel extends CategoryModel
     }
 
 
-    public static function getLimitProductsByCategory(int $id)
+    public static function getLimitProductsByCategory(int|string $id)
      {
          $connect = DatabaseModel::connect();
          $querry = 'SELECT product.*,categorie.nom FROM product INNER JOIN categorie ON product.categorie = categorie.id WHERE categorie = :id ORDER BY date_ajout_produit DESC LIMIT 4';

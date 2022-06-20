@@ -14,6 +14,7 @@
     "sass": "^1.52.2",
     "sweetalert": "^2.1.2",
     "vue": "^3.2.25",
+    "vue-paypal-checkout": "^3.2.0",
     "vue-router": "^4.0.15",
     "vuex": "^4.0.2"
   },

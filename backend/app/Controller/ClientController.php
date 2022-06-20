@@ -14,7 +14,7 @@ class ClientController
         $data = Request::getBody();
         $newData = array(
             'email' => $data['email'],
-            'fname' => $data['fname'],
+            'fname' => $data['fullName'],
             'password' => password_hash($data['password'], PASSWORD_ARGON2I)
         );
         $result = ClientModel::addClient($newData);

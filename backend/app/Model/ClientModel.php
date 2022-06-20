@@ -22,7 +22,7 @@ class ClientModel
     {
         $email = $data;
         try {
-            $db = DatabaseModel::connect()->prepare('SELECT email , password FROM client WHERE email = :email');
+            $db = DatabaseModel::connect()->prepare('SELECT * FROM client WHERE email = :email');
             $db->execute(array(":email" => $email));
             return $db->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {

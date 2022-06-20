@@ -4,18 +4,18 @@
       <div class="hidden md:block w-1/3 h-fit p-3 bg-red-50 shadow-inner">
         <h3 class="font-semibold">Filter your products</h3>
         <p class="text-sm whitespace-nowrap p-2">Select products by category</p>
-        <span>
-          <input
-            type="radio"
-            v-model="allProducts"
-            id="default-radio-btn"
-            name="default-radio-btn"
-            class="radio fill-primary"
-          />
-          <label for="default-radio-btn" class="font-medium ml-6"
-            >All Categories</label
-          >
-        </span>
+        <!--        <span>-->
+        <!--          <input-->
+        <!--            type="radio"-->
+        <!--            v-model="allProducts"-->
+        <!--            id="default-radio-btn"-->
+        <!--            name="default-radio-btn"-->
+        <!--            class="radio fill-primary"-->
+        <!--          />-->
+        <!--          <label for="default-radio-btn" class="font-medium ml-6"-->
+        <!--            >All Categories</label-->
+        <!--          >-->
+        <!--        </span>-->
         <span
           class="flex justify-start items-center gap-6"
           v-for="item in $store.state.categories"
@@ -76,7 +76,7 @@ export default {
       this.$store.dispatch("fetchProducts");
     },
     getFilteredProducts(item) {
-      this.$store.dispatch("fetchProducts", item.id);
+      this.$store.dispatch("fetchProducts", { category: item.id });
     },
   },
 };

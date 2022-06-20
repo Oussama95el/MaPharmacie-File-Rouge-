@@ -5,9 +5,7 @@
     <div class="rounded-t mb-0 px-4 py-3 border-0 bg-primary">
       <div class="flex flex-wrap items-center">
         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-          <h3 class="font-semibold text-sm md:text-lg text-white">
-            Products Tables
-          </h3>
+          <h3 class="font-semibold text-sm text-white">Products Tables</h3>
         </div>
         <div
           class="relative w-full pt-1 px-4 max-w-full flex-grow flex-1 flex gap-[1rem] justify-end"

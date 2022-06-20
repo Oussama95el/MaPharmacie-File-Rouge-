@@ -152,7 +152,10 @@
             </div>
           </div>
           <div class="flex">
-            <button class="w-full md:block md:w-auto mx-4 text-left">
+            <button
+              class="w-full md:block md:w-auto mx-4 text-left"
+              v-if="loggedIn"
+            >
               <router-link to="/login">
                 <img
                   class="w-6 ml-1 md:w-8"
@@ -160,6 +163,21 @@
                   alt="user log image"
                 />
                 <span>Login</span>
+              </router-link>
+            </button>
+            <!--            logout hidden icon-->
+            <button
+              class="w-full md:block md:w-auto mx-4 text-left"
+              @click="logout"
+              v-else
+            >
+              <router-link to="/login">
+                <img
+                  class="w-6 ml-1 md:w-8"
+                  src="/assets/images/cil_account-logout.svg"
+                  alt="user logout image"
+                />
+                <span>Logout</span>
               </router-link>
             </button>
             <button
@@ -194,9 +212,18 @@ export default {
   data() {
     return {
       display: true,
+      loggedIn: true,
     };
   },
-  computed: {},
+  computed: {
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    },
+    logout() {
+      this.$store.commit("logout");
+      this.$store.commit("clearUser");
+    },
+  },
   mounted() {
     this.$store.dispatch("fetchCategories");
   },

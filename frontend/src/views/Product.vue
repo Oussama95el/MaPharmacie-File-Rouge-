@@ -87,8 +87,6 @@
 </template>
 
 <script>
-//
-
 import ProductCard from "../components/cards/ProductCard.vue";
 import swal from "sweetalert";
 export default {
@@ -100,7 +98,6 @@ export default {
     return {
       limitCard: 4,
       quantity: 1,
-      similarProds: [],
     };
   },
   computed: {

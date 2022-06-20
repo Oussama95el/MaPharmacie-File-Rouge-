@@ -40,9 +40,8 @@ const currentPage = computed(() => store.state.currentPage);
 const store = useStore();
 const category = computed(() => store.state.currentCategory);
 const changePage = (page) => {
-  console.log(page);
   store.commit("changePage", page);
-  store.dispatch("fetchProducts", category, page);
+  store.dispatch("fetchProducts", { category, page });
 };
 // const changePage = (page) => {
 //   store.dispatch("fetchProducts", page);
