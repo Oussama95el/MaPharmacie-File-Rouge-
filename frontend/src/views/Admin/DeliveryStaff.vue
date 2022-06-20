@@ -17,7 +17,7 @@ export default {
   components: { TableStaffCard, StaffForm },
   computed: {
     getAllStaff() {
-      return this.$store.state.livreur;
+      return this.$store.state.user.livreur;
     },
     showModal() {
       return this.$store.state.showModal;
@@ -25,6 +25,7 @@ export default {
   },
   mounted() {
     this.fetchLivreur();
+    console.log(this.getAllStaff);
   },
   methods: {
     fetchLivreur() {

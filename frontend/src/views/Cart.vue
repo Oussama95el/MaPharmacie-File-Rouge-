@@ -70,7 +70,7 @@
                           name="cart[3791842][qty]"
                           size="1"
                           min="1"
-                          max="1000"
+                          max="5"
                           data-msg-max=""
                         />
                         <span
@@ -143,10 +143,11 @@
                   <span class="text-xs text-gray-400"
                     >Complete your informations to checkout</span
                   >
-                  <form class="w-full">
+                  <form class="w-full" @submit.prevent="checkout">
                     <div class="flex justify-center flex-col pt-3">
                       <label class="text-xs text-gray-400">Adress 1</label>
                       <input
+                          v-model="clientInfo.adress1"
                         type="text"
                         class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
                         placeholder="15 Rue de la République, Example"
@@ -156,16 +157,28 @@
                     <div class="flex justify-center flex-col pt-3">
                       <label class="text-xs text-gray-400">Adress 2</label>
                       <input
+                          v-model="clientInfo.adress2"
                         type="text"
                         class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
                         placeholder="35 Rue de la République, Example"
                         required
                       />
                     </div>
+                    <div class="flex justify-center flex-col pt-3">
+                      <label class="text-xs text-gray-400">Telephone</label>
+                      <input
+                          v-model="clientInfo.tel"
+                          type="tel"
+                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
+                          placeholder="+212 600 00 00 00"
+                          required
+                      />
+                    </div>
                     <div class="grid grid-cols-2 gap-6">
                       <div class="flex justify-center flex-col pt-3">
                         <label class="text-xs text-gray-400">Zip Code</label>
                         <input
+                            v-model="clientInfo.zip"
                           type="text"
                           class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
                           placeholder="00000"
@@ -175,6 +188,7 @@
                       <div class="flex justify-center flex-col pt-3">
                         <label class="text-xs text-gray-400">City</label>
                         <input
+                            v-model="clientInfo.city"
                           type="text"
                           class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"
                           placeholder="City"
@@ -189,49 +203,9 @@
                         value="Confirm"
                       />
                     </div>
-                    <!--                  <div class="flex justify-center flex-col pt-3">-->
-                    <!--                    <label class="text-xs text-gray-400">Card Number</label>-->
-                    <!--                    <input-->
-                    <!--                      type="text"-->
-                    <!--                      class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"-->
-                    <!--                      placeholder="****     ****      ****      ****"-->
-                    <!--                    />-->
-                    <!--                  </div>-->
-
-                    <!--                  <div class="grid grid-cols-3 gap-2 pt-2 mb-3">-->
-                    <!--                    <div class="col-span-2">-->
-                    <!--                      <label class="text-xs text-gray-400"-->
-                    <!--                        >Expiration Date</label-->
-                    <!--                      >-->
-                    <!--                      <div class="grid grid-cols-2 gap-2">-->
-                    <!--                        <input-->
-                    <!--                          type="text"-->
-                    <!--                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"-->
-                    <!--                          placeholder="mm"-->
-                    <!--                        />-->
-                    <!--                        <input-->
-                    <!--                          type="text"-->
-                    <!--                          class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"-->
-                    <!--                          placeholder="yyyy"-->
-                    <!--                        />-->
-                    <!--                      </div>-->
-                    <!--                    </div>-->
-
-                    <!--                    <div class="">-->
-                    <!--                      <label class="text-xs text-gray-400">CVV</label>-->
-                    <!--                      <input-->
-                    <!--                        type="text"-->
-                    <!--                        class="focus:outline-none w-full h-6 bg-gray-800 text-white placeholder-gray-300 text-sm border-b border-gray-600 py-4"-->
-                    <!--                        placeholder="XXX"-->
-                    <!--                      />-->
-                    <!--                    </div>-->
-                    <!--                  </div>-->
-                    <!--                  <button-->
-                    <!--                    class="h-12 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600"-->
-                    <!--                  >-->
-                    <!--                    Check Out-->
-                    <!--                  </button>-->
-                    <div class="flex justify-center flex-col pt-3">
+                    <div class="flex justify-center flex-col pt-3"
+                         :class="displayPayment"
+                    >
                       <h3 class="text-white text-center">
                         Choose payment method
                       </h3>
@@ -259,12 +233,27 @@ export default {
     return {
       message: "",
       cart: undefined,
+      clientInfo: {
+        id: "",
+        adress1: "",
+        adress2: "",
+        tel: "",
+        zip: "",
+        city: "",
+      },
+      displayPayment: "hidden",
     };
   },
   computed: {
     cartItems() {
       this.cart = this.$store.state.cartItems.length;
       return this.$store.state.cartItems;
+    },
+    clientState(){
+      return this.$store.state.clientInfo;
+    },
+    userState(){
+      return this.$store.state.user.client;
     },
     subtotal() {
       this.$store.commit(
@@ -278,11 +267,23 @@ export default {
     },
   },
   mounted() {
-    if (this.cart == 0) {
+    if (this.cart === 0) {
       this.message = "Your cart is empty";
     }
+    this.getClientInfo();
+    this.setClientInfo(this.clientState);
   },
   methods: {
+    setClientInfo(data) {
+      if (this.userState) {
+        this.clientInfo.id = this.userState.id;
+        this.clientInfo.adress1 = this.userState.adress1;
+        this.clientInfo.adress2 = this.userState.adress2;
+        this.clientInfo.tel = this.userState.tel;
+        this.clientInfo.zip = this.userState.zip_code;
+        this.clientInfo.city = this.userState.city;
+      }
+    },
     decrement(item) {
       if (item.quantity > 1) {
         item.quantity--;
@@ -300,8 +301,27 @@ export default {
     clearCart() {
       this.$store.commit("clearCart");
     },
+    getClientInfo() {
+    const id = JSON.parse(localStorage.getItem("client")) ;
+      this.$store.dispatch("getClientInfo", id);
+    },
     checkout() {
-      this.$store.commit("checkout");
+      if (this.userState != null) {
+        this.clientInfo.id = this.userState.id;
+        this.$store.dispatch("checkout", this.clientInfo);
+        this.displayPayment = "block";
+      } else {
+          swal({
+            title: this.userState,
+            text: "You need to login to checkout",
+            icon: "warning",
+            buttons: true,
+          }).then((willDelete) => {
+            if (willDelete) {
+              this.$router.push("/login");
+            }
+          });
+      }
     },
   },
 };

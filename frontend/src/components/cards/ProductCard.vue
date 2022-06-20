@@ -90,7 +90,6 @@ export default {
       let product = item;
       let quantity = 1;
       let cart = this.$store.state.cartItems;
-      console.log(cart);
       let productInCart = cart.find((item) => item.id === product.id);
       if (productInCart) {
         productInCart.quantity += quantity;

@@ -13,10 +13,12 @@ export default createStore({
       livreur: JSON.parse(localStorage.getItem("livreur")) || null,
       admin: JSON.parse(localStorage.getItem("admin")) || null,
     },
+    clientInfo: {},
     currentCategory: undefined,
     currentPage: 1,
     loggedIn: false,
     showModal: false,
+    orderId: null,
     similarProducts: JSON.parse(localStorage.getItem("similarProducts")) || [],
     currentProduct: JSON.parse(localStorage.getItem("CP")),
     cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
@@ -38,30 +40,35 @@ export default createStore({
     },
     setSimilarProducts(state, products) {
       state.similarProducts = products;
-      console.log(products);
       localStorage.setItem(
         "similarProducts",
         JSON.stringify(state.similarProducts)
       );
     },
+    setOrderId(state, orderId) {
+      state.orderId = orderId;
+    },
     logout(state) {
       this.state.loggedIn = !this.state.loggedIn;
     },
+    setClientInfo(state, client) {
+        state.clientInfo = client;
+    },
     setClient(state, client) {
-      state.user.client = localStorage.setItem(
-        "client",
-        JSON.stringify(client)
+      state.user.client = client
+      localStorage.setItem("client", JSON.stringify(client)
       );
     },
     setLivreur(state, livreur) {
-      state.user.livreur = localStorage.setItem(
+      state.user.livreur = livreur;
+          localStorage.setItem(
         "livreur",
         JSON.stringify(livreur)
       );
     },
     clearUser(state) {
-      state.user.client = localStorage.setItem("client", null);
-      state.user.livreur = localStorage.setItem("livreur", null);
+      state.user.client = state.user.livreur = null
+      localStorage.clear();
     },
     setCart(state, cartItems) {
       state.cartItems = cartItems;
@@ -88,11 +95,11 @@ export default createStore({
       state.delivery = delivery;
     },
     addLivreur(state, livreur) {
-      state.livreur.push(livreur);
-      state.livreur.sort((a, b) => a.id - b.id);
+      state.user.livreur.push(livreur);
+      state.user.livreur.sort((a, b) => a.id - b.id);
     },
     deleteLivreur(state, livreur) {
-      state.livreur = state.livreur.filter((item) => item.id != livreur);
+      state.user.livreur = state.user.livreur.filter((item) => item.id != livreur);
     },
   },
   actions: {
@@ -103,7 +110,6 @@ export default createStore({
           user
         )
         .then((res) => {
-          console.log(res.data);
           swal("Success", "You are registered", "success");
         });
     },
@@ -111,7 +117,6 @@ export default createStore({
       const endpoint =
         "http://localhost/MaPharmacie/backend/public/client/login";
       axios.post(endpoint, user).then((res) => {
-        console.log(res.data);
         if (res.data == []) {
           swal("Oops", "Login Failed", "error");
         } else {
@@ -146,7 +151,7 @@ export default createStore({
         }
       });
     },
-    async fetchProducts({ commit, state }, payload) {
+    async fetchProducts({ commit}, payload) {
       const { category, page } = payload ?? {};
       let endpoint = `http://localhost/MaPharmacie/backend/public/products?`;
       if (category) {
@@ -216,15 +221,37 @@ export default createStore({
         }
       });
     },
+    getClientInfo: async function ({ commit }, id) {
+      if (id) {
+        const endpoint = `http://localhost/MaPharmacie/backend/public/client/getClientInfo`;
+        axios.post(endpoint, id).then((res) => {
+            commit("setClientInfo", res.data);
+        });}
+    },
     checkout: async function ({ commit }, payload) {
       const endpoint =
-        "http://localhost/MaPharmacie/backend/public/client/checkout";
+        "http://localhost/MaPharmacie/backend/public/client/updateInfo";
       axios.post(endpoint, payload).then((res) => {
         if (res.status !== 200) {
           this.message = "Api connection failed";
         } else {
-          commit("clearCart");
-          swal("Success", "Checkout Successful", "success");
+          axios.post("http://localhost/MaPharmacie/backend/public/order/add", payload).then((res) => {
+            if (res.status !== 200) {
+              this.message = "Api connection failed";
+            } else {
+              this.state.cartItems.forEach((item) => {
+                axios.post("http://localhost/MaPharmacie/backend/public/datail/add", {
+                  order_id: JSON.parse(res.data).id,
+                  product_id: item.id,
+                  quantity: item.quantity,
+                }).then((res) => {
+                  if (res.status !== 200) {
+                    this.message = "Api connection failed";
+                  }
+                });
+              });
+            }
+          });
         }
       });
     },

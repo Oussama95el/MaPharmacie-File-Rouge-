@@ -221,7 +221,7 @@ export default {
     },
     logout() {
       this.$store.commit("logout");
-      this.$store.commit("clearUser");
+      localStorage.clear();
     },
   },
   mounted() {

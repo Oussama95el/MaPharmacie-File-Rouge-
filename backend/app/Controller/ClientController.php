@@ -19,7 +19,7 @@ class ClientController
         );
         $result = ClientModel::addClient($newData);
         if ($result) {
-            echo json_encode($result);
+            echo json_encode(true);
         }
     }
 
@@ -29,4 +29,22 @@ class ClientController
         $this->checkCredentiels(ClientModel::checkClient($person['email']),$person);
     }
 
+    public function updateClientInfo()
+    {
+        $data = Request::getBody();
+        $newData = array(
+            'adress1' => $data['adress1'],
+            'adress2' => $data['adress2'],
+            'zip_code' => $data['zip'],
+            'tel' => $data['tel'],
+            'city' => $data['city'],
+            'id' => $data['id']
+        );
+        ClientModel::updateClientInfo($newData);
+    }
+    public function getClientById()
+    {
+        $id = Request::getBody();
+        echo json_encode(ClientModel::getClientById($id['id']));
+    }
 }

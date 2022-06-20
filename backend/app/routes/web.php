@@ -19,6 +19,8 @@ Route::post('/admin/login' , [AdminController::class, "auth"]);
 //client routes
 Route::post("/client/register", [ClientController::class, "register"]);
 Route::post('/client/login' , [ClientController::class, "auth"]);
+Route::post('/client/updateInfo' , [ClientController::class, "updateClientInfo"]);
+Route::post("/client/getClientInfo" , [ClientController::class, "getClientById"]);
 
 //livreur routes
 Route::post('/livreur/login',[LivreurController::class,"auth"]);

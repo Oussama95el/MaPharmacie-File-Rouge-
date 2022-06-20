@@ -12,8 +12,7 @@ class OrderDetailController
         $data = Request::getBody();
         $newData = array(
             'quantity' => $data['quantity'],
-            'livereur_id' => $data['livereur_id'],
-            'commande_id' => $data['commande_id'],
+            'command_id' => $data['order_id'],
             'product_id' => $data['product_id']
         );
         $result = OrderDetailModel::addOrderDetail($newData);

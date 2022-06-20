@@ -13,11 +13,9 @@ class OrderController
         $data = Request::getBody();
         $newData = array(
             'ref' =>    strtoupper('OR' . uniqid()) ,
-            'status' => $data['status'],
-            'livereur_id' => $data['livereur_id'],
+            'status' => "Pending",
             'date_de_commande' => date('Y-m-d H:i:s'),
-            'client_id' => $data['client_id'],
-            'detail_id' => $data['detail_id']
+            'client_id' => $data['id']
         );
         $result = OrderModel::addOrder($newData);
         if ($result) {
