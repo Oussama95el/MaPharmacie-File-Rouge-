@@ -23,11 +23,7 @@
           >
             Ref
           </th>
-          <th
-              class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
-          >
-            Delivery staff
-          </th>
+
           <th
               class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
           >
@@ -43,9 +39,14 @@
           >
             Status
           </th>
+          <th
+              class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+          >
+            Actions
+          </th>
         </tr>
         </thead>
-<!--        loop for each valid order in the database-->
+        <!--        loop for each valid order in the database-->
         <tbody v-for="item in this.orders">
         <tr>
           <td
@@ -55,15 +56,7 @@
               {{item.ref}}
             </button>
           </td>
-          <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-          >
 
-            <p class="description whitespace-pre-wrap font-medium">
-              {{item.livreur_fname ? item.livreur_fname : "No delivery staff assigned"}}
-
-            </p>
-          </th>
           <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
           >
@@ -79,8 +72,15 @@
           <td
               class="border-t-0 px-6 align-middle border-l-0 font-bold text-primary border-r-0 text-xs whitespace-nowrap p-4"
           >
-              {{ item.status }}
+            {{ item.status }}
           </td>
+          <th
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
+          >
+            <button class="w-1/2 mr-2 p-1.5 text-center font-semibold text-black bg-secondary">
+              Livré
+            </button>
+          </th>
         </tr>
         </tbody>
       </table>
@@ -90,7 +90,7 @@
 
 <script>
 export default {
-  name: "ValidOrdersCard",
+  name: "LivraisonCard",
   data(){
     return{
       staff:'',

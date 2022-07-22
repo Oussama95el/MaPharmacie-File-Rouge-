@@ -7,6 +7,9 @@
         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
           <h3 class="font-semibold text-sm text-white">Products Tables</h3>
         </div>
+        <div>
+          <Pagination/>
+        </div>
         <div
           class="relative w-full pt-1 px-4 max-w-full flex-grow flex-1 flex gap-[1rem] justify-end"
         >
@@ -173,9 +176,12 @@
 
 <script>
 import axios from "axios";
-
+import Pagination from "../../components/pagination/Pagination.vue";
 export default {
   name: "TableCard",
+  components: {
+    Pagination
+  },
   inject: ["removeProduct", "startUpdate", "addProduct"],
   data() {
     return {

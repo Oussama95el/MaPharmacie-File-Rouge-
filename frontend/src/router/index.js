@@ -91,13 +91,14 @@ const routes = [
       },
     ],
   },
+  // define livreur restricted routes
   {
     path: "/livreur",
     component: Livreur,
-    redirect: "/livreur/Dashboard",
+    redirect: "/livreur/Delivery",
     children: [
       {
-        path: "/livreur/Orders",
+        path: "/livreur/Delivery",
         component: Orders,
       },
       {
@@ -105,7 +106,7 @@ const routes = [
         component: LivreurDashboard,
       },
       {
-        path: "/livreur/Delivery",
+        path: "/livreur/Orders",
         component: Delivery,
       },
     ],

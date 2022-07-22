@@ -43,9 +43,14 @@
           >
             Status
           </th>
+          <th
+              class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+          >
+            Action
+          </th>
         </tr>
         </thead>
-<!--        loop for each valid order in the database-->
+        <!--        loop for each Invalid or pending orders in the database  -->
         <tbody v-for="item in this.orders">
         <tr>
           <td
@@ -56,13 +61,17 @@
             </button>
           </td>
           <th
-              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
           >
+            <span class="ml-3 whitespace-pre-wrap">
+                <select class="w-fit text-sm font-medium focus:outline-none border-0 p-1.5 text-start" v-model="staff" @change="setStaff(item.id)">
+                  <option v-for="item in this.livreurs" :value="item.id"
+                          class="text-sm" :key="item.id">
+                    {{item.fname}}
+                  </option>
 
-            <p class="description whitespace-pre-wrap font-medium">
-              {{item.livreur_fname ? item.livreur_fname : "No delivery staff assigned"}}
-
-            </p>
+                </select>
+            </span>
           </th>
           <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -79,7 +88,17 @@
           <td
               class="border-t-0 px-6 align-middle border-l-0 font-bold text-primary border-r-0 text-xs whitespace-nowrap p-4"
           >
-              {{ item.status }}
+            {{ item.status }}
+          </td>
+          <td
+              class="border-t-0 px-3 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+          >
+            <button class="w-1/2 mr-2 p-1.5 text-center text-white bg-primary" @click="updateOrderStatus(item.id,this.valid)">
+              Valid
+            </button>
+            <button class="w-1/2 p-1.5 text-center text-white bg-red-500" @click="updateOrderStatus(item.id,this.invalid)">
+              Invalid
+            </button>
           </td>
         </tr>
         </tbody>
@@ -89,43 +108,61 @@
 </template>
 
 <script>
-export default {
-  name: "ValidOrdersCard",
+export default  {
+  name: "InvalidOrdersCard",
   data(){
     return{
       staff:'',
+      valid:'Valid',
+      invalid:'Invalid',
     }
   },
   computed:{
     orders(){
-      return  this.$store.state.validOrders;
+      return  this.$store.state.invalidOrders;
     },
     livreurs(){
       return this.$store.state.livreurs;
+    },
+    currentLivreur(item){
+      this.staff = item.livreur_fname;
     }
   },
   mounted() {
-    this.fetchValidOrders();
+    this.fetchInvalidOrders();
     this.fetchLivreurs();
+    console.log(this.orders);
   },
   methods:{
-    fetchValidOrders(){
-      this.$store.dispatch('getValidOrders');
+    fetchInvalidOrders(){
+      this.$store.dispatch('getInvalidOrders');
     },
     fetchLivreurs(){
       this.$store.dispatch("fetchLivreur");
     },
     setStaff(id){
-      let data = {
-        livereur: this.staff,
-        orderID: id
+      if (confirm(`Are you sure you want to assign this order to this staff`) == true){
+        let data = {
+          livereur: this.staff,
+          orderID: id
+        }
+        this.$store.dispatch('setOrderLivreur',data);
       }
-      this.$store.dispatch('setOrderLivreur',data);
     },
     displayOrderDetail(item){
       this.$store.commit('displayDetailCard');
       this.$store.commit('setCurrentOrder',item.ref);
       this.$store.dispatch('fetchOrderDetail',item);
+    },
+    updateOrderStatus(id,status){
+      if (confirm('Are you sure you want to set this Action') == true){
+        let data = {
+          id: id,
+          status: status
+        }
+        console.log(data)
+        this.$store.dispatch('updateOrderStatus',data);
+      }
     }
   }
 }

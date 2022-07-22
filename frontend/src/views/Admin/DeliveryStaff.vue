@@ -16,16 +16,12 @@ export default {
   name: "DeliveryStaff",
   components: { TableStaffCard, StaffForm },
   computed: {
-    getAllStaff() {
-      return this.$store.state.user.livreur;
-    },
     showModal() {
       return this.$store.state.showModal;
     },
   },
   mounted() {
     this.fetchLivreur();
-    console.log(this.getAllStaff);
   },
   methods: {
     fetchLivreur() {

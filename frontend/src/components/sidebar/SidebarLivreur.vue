@@ -101,19 +101,19 @@
         <!-- Navigation -->
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-primary text-xs uppercase py-3 font-medium block"
-              to="#"
-            >
-              Valid Orders
-            </router-link>
-          </li>
+<!--          <li class="items-center">-->
+<!--            <router-link-->
+<!--              class="text-blueGray-700 hover:text-primary text-xs uppercase py-3 font-medium block"-->
+<!--              to="#"-->
+<!--            >-->
+<!--              Valid Orders-->
+<!--            </router-link>-->
+<!--          </li>-->
 
           <li class="items-center">
             <router-link
               class="text-blueGray-700 hover:text-primary text-xs uppercase py-3 font-medium block"
-              to="#"
+              to="/livreur/Delivery"
             >
               Delivery
             </router-link>
@@ -128,12 +128,12 @@
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
           <li class="items-center">
-            <router-link
+            <a
               class="text-blueGray-700 hover:text-primary text-xs uppercase py-3 font-medium block"
-              to="/login"
+              href="/"
             >
               Logout
-            </router-link>
+            </a>
           </li>
         </ul>
       </div>
@@ -144,6 +144,16 @@
 <script>
 export default {
   name: "SidebarLivreur",
+  data() {
+    return {
+      collapseShow: "hidden",
+    };
+  },
+  methods: {
+    toggleCollapseShow(collapseShow) {
+      this.collapseShow = collapseShow;
+    },
+  },
 };
 </script>
 

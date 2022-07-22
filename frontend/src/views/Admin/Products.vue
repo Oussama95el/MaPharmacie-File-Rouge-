@@ -13,7 +13,6 @@
 <script>
 import TableCard from "../../components/cards/TableProductsCard.vue";
 import ProductForm from "../../components/forms/ProductForm.vue";
-import axios from "axios";
 import {computed} from "vue";
 const endpoint = "http://localhost/MaPharmacie/backend/public/products"
 export default {
@@ -31,7 +30,8 @@ export default {
   },
   components: {
     TableCard,
-    ProductForm
+    ProductForm,
+
   },
   data(){
     return {

@@ -70,12 +70,10 @@
                       />
                     </svg>
 
-                    <router-link
-                      to="/"
+                    <a
+                      href="/"
                       class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-primary md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                      aria-current="page"
-                      >Home</router-link
-                    >
+                      >Home</a>
                   </span>
                 </li>
                 <li>
@@ -94,59 +92,21 @@
                     Contact</router-link
                   >
                 </li>
-                <li>
-                  <router-link
-                    to="/"
-                    class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-primary md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                  >
-                    Para-pharmacie</router-link
-                  >
-                </li>
+<!--                <li>-->
+<!--                  <router-link-->
+<!--                    to="/"-->
+<!--                    class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-primary md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"-->
+<!--                  >-->
+<!--                    Para-pharmacie</router-link-->
+<!--                  >-->
+<!--                </li>-->
                 <li>
                   <router-link
                     to="/store"
                     class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-primary md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                   >
                     Products
-                    <!--                    <svg-->
-                    <!--                      class="w-4 h-4 ml-1"-->
-                    <!--                      fill="currentColor"-->
-                    <!--                      viewBox="0 0 20 20"-->
-                    <!--                      xmlns="http://www.w3.org/2000/svg"-->
-                    <!--                    >-->
-                    <!--                      <path-->
-                    <!--                        fill-rule="evenodd"-->
-                    <!--                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"-->
-                    <!--                        clip-rule="evenodd"-->
-                    <!--                      ></path>-->
-                    <!--                    </svg>-->
                   </router-link>
-                  <!-- Dropdown menu -->
-                  <!--                  <div-->
-                  <!--                    id="dropdownNavbar"-->
-                  <!--                    class="z-50 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600"-->
-                  <!--                  >-->
-                  <!--                    <ul-->
-                  <!--                      class="py-1 text-sm text-gray-700 dark:text-gray-400"-->
-                  <!--                      aria-labelledby="dropdownLargeButton"-->
-                  <!--                    >-->
-                  <!--                      <li v-for="item in this.$store.state.categories">-->
-                  <!--                        <span-->
-                  <!--                          :name="item.id"-->
-                  <!--                          @click="getCurrentCategory(item)"-->
-                  <!--                          role="button"-->
-                  <!--                          id="dropdownRightButton"-->
-                  <!--                          data-dropdown-toggle="dropdownRight"-->
-                  <!--                          data-dropdown-placement="right"-->
-                  <!--                          class="w-full mb-3 md:mb-0 bg-transparent hover:bg-secondary focus:outline-none focus:ring-blue-300 font-medium text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"-->
-                  <!--                          type="button"-->
-                  <!--                        >-->
-                  <!--                          {{ item.nom }}-->
-                  <!--                        </span>-->
-                  <!--                        &lt;!&ndash; Dropdown menu &ndash;&gt;-->
-                  <!--                      </li>-->
-                  <!--                    </ul>-->
-                  <!--                  </div>-->
                 </li>
               </ul>
             </div>
@@ -165,7 +125,7 @@
                 <span>Login</span>
               </router-link>
             </button>
-            <!--            logout hidden icon-->
+            <!--            logout icon-->
             <button
               class="w-full md:block md:w-auto mx-4 text-left"
               @click="logout"
@@ -180,12 +140,13 @@
                 <span>Logout</span>
               </router-link>
             </button>
+<!--            cart icon -->
             <button
               class="w-full md:block md:w-auto mt-1 mx-4 text-left relative"
             >
               <span
                 v-if="display"
-                class="bg-primary px-0.5 w-fit h-fit rounded text-white absolute -right-3 top-1"
+                class="bg-primary px-0.5 w-fit h-fit rounded text-white absolute -right-3 md:top-1"
               >
                 {{ this.$store.state.cartItems.length }}
               </span>
@@ -205,8 +166,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-
 export default {
   name: "HeaderNav",
   data() {

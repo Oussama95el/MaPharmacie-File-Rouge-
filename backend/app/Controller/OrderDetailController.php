@@ -21,4 +21,13 @@ class OrderDetailController
         }
     }
 
+    public function OrderDetailByOrder()
+    {
+        $data = Request::getBody();
+        $result = OrderDetailModel::getOrderDetailByOrder($data['id']);
+        echo json_encode($result);
+    }
+
+
+
 }

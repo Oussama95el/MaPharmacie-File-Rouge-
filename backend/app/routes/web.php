@@ -40,8 +40,16 @@ Route::get('/products',[ProductController::class,"getAllProducts"]);
 Route::get('/products/similarProd/{category}',[ProductController::class,"getProductsByCategory"]);
 Route::post('/product/update',[ProductController::class,"updateProduct"]);
 Route::delete('/product/delete/{id}',[ProductController::class,"deleteProduct"]);
+Route::post('/product/{search}',[ProductController::class,"searchProduct"]);
 //// Order details routes
 Route::post('/datail/add', [OrderDetailController::class,"addOrderDetail"]);
+Route::post('/details', [OrderDetailController::class,"OrderDetailByOrder"]);
 //Route::get('/detail/getAll', [OrderDetailController::class,"getAllOrderDetails"]);
 //// Order routes
 Route::post('/order/add',[OrderController::class,"addOrder"]);
+Route::post('/order/update',[OrderController::class,"updateOrderLivereur"]);
+Route::post('/orders/valid',[OrderController::class,"fetchOrdersByStatus"] );
+//Route::post('/livreur/currentLivreur' , [OrderController::class, "getCurrentLivreur"]);
+Route::post('/orders/invalid',[OrderController::class,"InvalidOrders"]);
+Route::post('/order/status',[OrderController::class,"updateStatus"]);
+

@@ -5,9 +5,14 @@ import swal from "sweetalert";
 
 export default createStore({
   state: {
+    // setting state
     delivery: [],
+    livreurs:[],
     products: [],
     categories: [],
+    validOrders: [],
+    invalidOrders:[],
+    // handling login state
     user: {
       client: JSON.parse(localStorage.getItem("client")) || null,
       livreur: JSON.parse(localStorage.getItem("livreur")) || null,
@@ -15,15 +20,21 @@ export default createStore({
     },
     clientInfo: {},
     currentCategory: undefined,
+    currentDetail: undefined,
+    currentOrder:undefined,
+    currentLivreur:undefined,
     currentPage: 1,
-    loggedIn: false,
+    loggedIn: true,
     showModal: false,
+    detailCard: 'hidden',
     orderId: null,
+    // Cart State handeled in localStorage
     similarProducts: JSON.parse(localStorage.getItem("similarProducts")) || [],
     currentProduct: JSON.parse(localStorage.getItem("CP")),
     cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
     cartTotal: JSON.parse(localStorage.getItem("cartTotal")) || 0,
   },
+  // handle mutations in store (mutations are like events)
   mutations: {
     getProducts(state, products) {
       state.products = products;
@@ -66,6 +77,9 @@ export default createStore({
         JSON.stringify(livreur)
       );
     },
+    setLivreurs(state,Livreurs){
+      state.livreurs = Livreurs
+    },
     clearUser(state) {
       state.user.client = state.user.livreur = null
       localStorage.clear();
@@ -95,13 +109,37 @@ export default createStore({
       state.delivery = delivery;
     },
     addLivreur(state, livreur) {
-      state.user.livreur.push(livreur);
-      state.user.livreur.sort((a, b) => a.id - b.id);
+      state.livreurs.push(livreur);
+      state.livreurs.sort((a, b) => a.id - b.id);
     },
-    deleteLivreur(state, livreur) {
-      state.user.livreur = state.user.livreur.filter((item) => item.id != livreur);
+    deleteLivreur(state, id) {
+      console.log(id);
+      state.livreurs = state.livreurs.filter((item) => item.id != id);
     },
+    setValidOrders(state,orders){
+      state.validOrders = orders
+    },
+    setInvalidOrders(state, orders){
+      state.invalidOrders = orders
+      state.invalidOrders = state.invalidOrders.filter((item) => item.status !== "Valid")
+    },
+    setCurrentOrder(state,order){
+      state.currentOrder = order
+    },
+    setCurrentDetail(state,detail){
+      state.currentDetail = detail
+    },
+    displayDetailCard(state){
+      state.detailCard = 'block'
+    },
+    closeDetailCard(state){
+      state.detailCard = 'hidden'
+    },
+    setCurrentLivreur(state,id){
+      state.currentLivreur = id
+    }
   },
+  // handle actions in store (actions are like events)
   actions: {
     async register({ commit }, user) {
       axios
@@ -117,10 +155,9 @@ export default createStore({
       const endpoint =
         "http://localhost/MaPharmacie/backend/public/client/login";
       axios.post(endpoint, user).then((res) => {
-        if (res.data == []) {
+        if (res.data == 'error') {
           swal("Oops", "Login Failed", "error");
         } else {
-          swal("Success", "Login Successful", "success");
           commit("setClient", res.data);
           router.push("/store");
         }
@@ -130,12 +167,10 @@ export default createStore({
       const endpoint =
         "http://localhost/MaPharmacie/backend/public/admin/login";
       axios.post(endpoint, user).then((res) => {
-        if (res.data !== "valid") {
+        if (res.data == 'error') {
           swal("Oops", "Login Failed", "error");
         } else {
-          swal("Success", "Login Successful", "success");
           router.push("/admin");
-          this.state.loggedIn = true;
         }
       });
     },
@@ -143,10 +178,10 @@ export default createStore({
       const endpoint =
         "http://localhost/MaPharmacie/backend/public/livreur/login";
       axios.post(endpoint, user).then((res) => {
-        if (res.data !== "valid") {
+        console.log(res.data);
+        if (res.data == 'error') {
           swal("Oops", "Login Failed", "error");
         } else {
-          swal("Success", "Login Successful", "success");
           router.push("/livreur");
         }
       });
@@ -196,7 +231,7 @@ export default createStore({
       const endpoint =
         "http://localhost/MaPharmacie/backend/public/livreur/getAllLivreur";
       axios.get(endpoint).then((res) => {
-        commit("setLivreur", res.data);
+        commit("setLivreurs", res.data);
       });
     },
     addStaff: async function ({ commit }, payload) {
@@ -255,5 +290,57 @@ export default createStore({
         }
       });
     },
+    getValidOrders: async function ({commit}){
+      const endpoint = "http://localhost/MaPharmacie/backend/public/orders/valid"
+      axios.post(endpoint,{status:'Valid'}).then((res)=>{
+          commit('setValidOrders',res.data);
+      });
+    },
+    getInvalidOrders: async function ({commit}){
+      const endpoint = "http://localhost/MaPharmacie/backend/public/orders/invalid"
+      axios.post(endpoint,{status:'Valid'}).then((res)=>{
+        commit('setInvalidOrders',res.data);
+      });
+    },
+    setOrderLivreur: async function ({commit},payload){
+      const endpoint = "http://localhost/MaPharmacie/backend/public/order/update"
+      axios.post(endpoint,payload).then((res)=>{
+        if (res.data){
+          swal("Success", "Delivery staff is set", "success");
+        } else {
+          swal("Oops", "something is wrong", "error");
+        }
+      })
+    },
+    fetchOrderDetail: async function ({commit},payload){
+      const endpoint = "http://localhost/MaPharmacie/backend/public/details"
+      axios.post(endpoint,payload).then((res)=>{
+        if (res.data){
+          commit('setCurrentDetail',res.data);
+        } else {
+          swal("Oops", "something is wrong", "error");
+        }
+      })
+    },
+    updateOrderStatus: async function ({commit},payload){
+      const endpoint = "http://localhost/MaPharmacie/backend/public/order/status"
+      axios.post(endpoint,payload).then((res)=>{
+        if (res.data){
+          swal("Great", "Status updated", "success");
+        } else {
+          swal("Oops", "something is wrong", "error");
+        }
+      })
+    },
+    getCurrentLivreur: async function ({commit},payload){
+      const endpoint = "http://localhost/MaPharmacie/backend/public/livreur/currentLivreur"
+      axios.post(endpoint,payload).then((res)=>{
+        if (res.data){
+          commit('setCurrentLivreur',res.data);
+        } else {
+          swal("Oops", "something is wrong", "error");
+        }
+      });
+    }
   },
 });

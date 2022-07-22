@@ -50,7 +50,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in staff">
+          <tr v-for="item in this.staff">
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
             >
@@ -93,20 +93,21 @@ export default {
   name: "TableStaffCard",
   data() {
     return {
-      staff: [],
     };
   },
   computed: {
     staff() {
-      return this.$store.state.user.livreur;
+      return this.$store.state.livreurs;
     },
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     deleteStaff(id) {
+      console.log('testin');
       console.log(id);
-      const endpoit = `http://localhost/MaPharmacie/backend/public/livreur/delete/${id}`;
-      axios.delete(endpoit).then((res) => {
+      const endpoint = `http://localhost/MaPharmacie/backend/public/livreur/delete/${id}`;
+      axios.delete(endpoint).then((res) => {
         this.$store.commit("deleteLivreur", id);
       });
     },

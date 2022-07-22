@@ -4,7 +4,7 @@ namespace App\Model;
 
 use PDO;
 
-abstract class CategoryModel
+class CategoryModel
 {
     static public function addCat($data)
     {
@@ -38,10 +38,4 @@ abstract class CategoryModel
         $db = $connect->prepare('DELETE FROM categorie WHERE id = :id');
         return $db->execute(["id" => $id]);
     }
-
-
-    abstract public static function addProduct($data);
-    abstract public static function getProductById($id);
-    abstract public static function updateProduct($data);
-    abstract public static function deleteProduct($id);
-}
+  }

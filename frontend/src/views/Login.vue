@@ -68,7 +68,7 @@
       </div>
       <!--      login-->
       <div
-        class="w-fit max-w-md md:h-[480px] md:w-[28rem] md:rounded-r-md p-10 border-solid border-[0.5px] border-black"
+        class="w-fit md:mt-0 mt-10 max-w-md  md:h-[480px] md:w-[28rem] md:rounded-r-md p-10 border-solid border-[0.5px] border-black"
       >
         <h5 class="mb-3 text-center uppercase text-base font-medium heading">
           i already have an account

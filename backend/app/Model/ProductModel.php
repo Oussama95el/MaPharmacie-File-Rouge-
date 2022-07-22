@@ -4,10 +4,11 @@ namespace App\Model;
 
 use PDO;
 
-class ProductModel extends CategoryModel
+class ProductModel
 {
     static public function addProduct($data):bool
     {
+        // add product to database
         $connect = DatabaseModel::connect();
         $db = $connect->prepare('INSERT INTO product  (ref,name, marque, image, description, prix_achat,prix_vente ,categorie, date_ajout_produit) 
                                                     values (:ref, :name, :marque, :image, :description, :prix_achat, :prix_vente,:categorie, :date_ajout_produit)');
@@ -15,8 +16,7 @@ class ProductModel extends CategoryModel
     }
     public static function getProducts(int $limit,int $page,int|null $category): bool|array
     {
-        // TODO: Implement getProduct() method.
-        // inner join product and categorie
+        // inner join product and categorie tables to get all products with their categories and limit the results to $limit and $page
         $connect = DatabaseModel::connect();
         $offset = ($page - 1) * $limit;
         $defaultQuery = 'SELECT product.*,categorie.nom FROM product INNER JOIN categorie ON product.categorie = categorie.id limit :limit offset :offset';
@@ -24,8 +24,7 @@ class ProductModel extends CategoryModel
             $db->bindValue(':limit', $limit, PDO::PARAM_INT);
             $db->bindValue(':offset', $offset, PDO::PARAM_INT);
             $db->execute();
-
-        if($category) {
+        if($category) {                                                         // if category is not null get only products with this category
             $filteredQuery =  'SELECT product.*,categorie.nom FROM product INNER JOIN categorie ON product.categorie = categorie.id WHERE categorie.id = :category limit :limit offset :offset';
                 $db = $connect->prepare($filteredQuery);
                 $db->bindValue(':category', $category, PDO::PARAM_INT);
@@ -39,7 +38,7 @@ class ProductModel extends CategoryModel
 
     public static function updateProduct($data): bool
     {
-        // TODO: Implement updateProduct() method.
+        // update product in database
         $connect = DatabaseModel::connect();
         $db = $connect->prepare('UPDATE product SET name = :name, marque = :marque, image = :image, description = :description, prix_achat = :prix_achat, prix_vente = :prix_vente, categorie = :categorie WHERE id = :id');
         return $db->execute($data);
@@ -47,7 +46,7 @@ class ProductModel extends CategoryModel
 
     public static function deleteProduct($id): bool
     {
-        // TODO: Implement deleteProduct() method.
+        // delete product from database
         $connect = DatabaseModel::connect();
         $db = $connect->prepare('DELETE FROM product WHERE id = :id');
         return $db->execute(["id" => $id]);
@@ -56,7 +55,7 @@ class ProductModel extends CategoryModel
 
     public static function getProductById($id): bool
     {
-        // TODO: Implement getProductById() method.
+        // get product by id
         $connect = DatabaseModel::connect();
         $db = $connect->prepare('SELECT * FROM product WHERE id = :id');
         $db->execute($id);
@@ -73,8 +72,8 @@ class ProductModel extends CategoryModel
     }
 
 
-    public static function getLimitProductsByCategory(int|string $id)
-     {
+    public static function getLimitProductsByCategory(int|string $id): bool|array
+    {
          $connect = DatabaseModel::connect();
          $querry = 'SELECT product.*,categorie.nom FROM product INNER JOIN categorie ON product.categorie = categorie.id WHERE categorie = :id ORDER BY date_ajout_produit DESC LIMIT 4';
          $db = $connect->prepare($querry);
@@ -83,11 +82,6 @@ class ProductModel extends CategoryModel
          return $db->fetchAll(PDO::FETCH_ASSOC);
      }
 
-    public static function getProduct()
-    {
-        // TODO: Implement getProduct() method.
-    }
-
     public static function getTotalProducts()
     {
         $connect = DatabaseModel::connect();
@@ -95,5 +89,13 @@ class ProductModel extends CategoryModel
         $db->execute();
         return $db->fetch(PDO::FETCH_ASSOC)['total'];
     }
-
+    // function for search products by nom or marque
+    public static function searchProducts($search): bool|array
+    {
+        $connect = DatabaseModel::connect();
+        $db = $connect->prepare('SELECT * FROM product WHERE name LIKE :search OR marque LIKE :search');
+        $db->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
+        $db->execute();
+        return $db->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

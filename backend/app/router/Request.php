@@ -5,7 +5,7 @@ namespace App\router;
 class Request
 {
     static private array $attributes = [];
-
+    // handle body requests and attributes requests
     static public function get($key): string|null
     {
         return self::$attributes[$key] ?? null;
@@ -28,6 +28,7 @@ class Request
 
     public static function getBody()
     {
+        // get the body of the request
         function parseFormBody(): array
         {
             $body = array();
@@ -36,15 +37,15 @@ class Request
             }
             return $body;
         }
-
+        // parse body request if it s json data
         function parseJSONBody()
         {
             $input = file_get_contents("php://input",);
             $body = json_decode($input, true);
-
+            // handle if json is not valid
             if (is_null($body)) {
                 foreach (explode("&", $input) as $value) {
-                    $explosion = explode("=", $value);
+                    $explosion = explode("=", $value); // explode the key and value of the body
 
                     [$key, $val] = $explosion;
                     $body[$key] = $val;
@@ -52,15 +53,14 @@ class Request
             }
             return $body;
         }
-
+        // handle body request if it s form data
         $body = parseFormBody();
         if (count($body) == 0) {
             $body = parseJSONBody();
         }
         return $body;
-
     }
-
+    // handle attributes requests
     public static function queryString($key)
     {
         return $_GET[$key] ?? null;

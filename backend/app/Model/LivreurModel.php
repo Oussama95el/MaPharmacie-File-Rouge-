@@ -27,7 +27,7 @@ class LivreurModel
         return $db->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function addLivreur($data)
+    public static function addLivreur($data): bool
     {
         $connect = DatabaseModel::connect();
         $db = $connect->prepare('INSERT INTO livereur ( fname, email, password) 
@@ -35,12 +35,13 @@ class LivreurModel
 
         return $db->execute($data);
     }
-    public static function updateLivreur($data)
+    public static function updateLivreur($data): bool
     {
         $connect = DatabaseModel::connect();
         $db = $connect->prepare('UPDATE livereur SET fname = :fname, email = :email WHERE id = :id');
         return $db->execute($data);
     }
+
     public static function deleteLivreur($id): bool
     {
         $connect = DatabaseModel::connect();

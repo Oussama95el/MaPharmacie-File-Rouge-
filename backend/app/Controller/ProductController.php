@@ -69,6 +69,7 @@ class ProductController
     {
         return ProductModel::deleteProduct(Request::get("id"));
     }
+
     public static function getProductsByCategory()
     {
         $data = ProductModel::getLimitProductsByCategory(Request::get("category"));
@@ -83,5 +84,12 @@ class ProductController
         $totalPages = ceil($total / 9);
         return Route::json($totalPages);
     }
-
+    // function that return search result of products
+    public static function searchProduct()
+    {
+        $data = ProductModel::searchProducts(Request::get("search"));
+        if ($data !== []){
+            return Route::json($data);
+        }else echo 'No data';
+    }
 }

@@ -22,4 +22,32 @@ class OrderController
             echo json_encode($result);
         }
     }
+    public function fetchOrdersByStatus(){
+        $data = Request::getBody();
+        $result = OrderModel::getOrderByStatus($data['status']);
+        echo json_encode($result);
+    }
+    public function updateOrderLivereur()
+    {
+        $data =  Request::getBody();
+        $livereur = $data['livereur'];
+        $id = $data['orderID'];
+        $result = OrderModel::updateOrder($livereur, $id);
+        echo json_encode($result);
+    }
+    public function InvalidOrders()
+    {
+        $data = Request::getBody();
+        $result = OrderModel::fetchInvalidOrders($data['status']);
+        echo json_encode($result);
+    }
+
+    public function updateStatus()
+    {
+        $data = Request::getBody();
+        $id = $data['id'];
+        $status = $data['status'];
+        $result = OrderModel::updateOrderStatus($id,$status);
+        echo json_encode($result);
+    }
 }
